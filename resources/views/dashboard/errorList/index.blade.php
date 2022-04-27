@@ -69,7 +69,7 @@
                             </button>
                         </td>
                         <td>
-                        @if (auth()->user()->level == "Frontend Developer" || auth()->user()->level == "Backend Developer" || auth()->user()->level == "Data Management" || auth()->user()->level == "Quality Assurance")
+                        @if (auth()->user()->level == "Frontend Developer" || auth()->user()->level == "Backend Developer" || auth()->user()->level == "Data Management")
                             @if ($el->status == 'progress')
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm{{ $el->id }}">

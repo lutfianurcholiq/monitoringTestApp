@@ -53,7 +53,7 @@ class TestScenarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, TestScenario $testScenario)
+    public function store(Request $request)
     { 
         // return $request;  
         $validated = $request->validate([
@@ -86,7 +86,6 @@ class TestScenarioController extends Controller
                 'status' => $request->status
             ]);
             
-            // $validated->testScenarios()->sync($request->error_list_id);
         }
 
         $validated['user_id'] = auth()->user()->id;

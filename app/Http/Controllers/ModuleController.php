@@ -29,6 +29,10 @@ class ModuleController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->level != "System Analyst")
+        {
+            return redirect('/module')->with('failed', 'Isnt Your Access');
+        }
         return view('dashboard.module.create', [
             'title' => "Create Module",
             'projects' => Project::all()

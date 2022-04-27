@@ -105,53 +105,23 @@ class ErrorListController extends Controller
     public function update(Request $request, errorList $errorList)
     {
 
-        // return $request;
-
         $request->validate([
             'status' => 'max:255'
         ]);
 
-        
-        // return $errorList;
-        
         if($request->status == "success")
         {
-            // $errorList->testScenarios()->update([
-                //     'result' => $request->status,
-                //     'status' => "done" 
-                // ]);
-                TestScenario::where('id', $errorList->test_id)->update([
-                    'result' => $request->status,
-                    'status' => "done" 
-                ]);
+    
+            TestScenario::where('id', $errorList->test_id)->update([
+                'result' => $request->status,
+                'status' => "done" 
+            ]);
 
-                $errorList->update([
-                    'status' => $request->status
-                ]);
+            $errorList->update([
+                'status' => $request->status
+            ]);
         }
         
-        
-        
-        // return $errorList;
-        // return $errorList;
-        
-        // $errorList = TestScenario::all('result','id');
-
-        // // dd($errorList);
-
-        // foreach($errorList as $test)
-        // {   
-        //     $test->result = "success";
-        //     if($test->result == "success")
-        //     {
-        //         $test->status = "done";
-        //     }
-        //     $test->where('id');
-        //     $test->save();
-        // }
-
-        // return $errorList;
-
         return redirect('/errorList')->with('success', 'Bug is success');
 
     }

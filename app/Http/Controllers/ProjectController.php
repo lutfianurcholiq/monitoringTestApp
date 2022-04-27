@@ -28,6 +28,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->level != "System Analyst")
+        {
+            return redirect('/project')->with('failed', 'Isnt Your Access');
+        }
         return view('dashboard.project.create', [
             'title' => "Create Project",
             'groups' => Group::all()

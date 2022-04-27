@@ -27,12 +27,26 @@
                 @endif
               </div>
             </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                @if (session()->has('failed'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ session('failed') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div> 
+                @endif
+              </div>
+            </div>
         </div>
     </div>
 
     <div class="card">
         <div class="card-body">
-        <a href="/module/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>
+          @if (auth()->user()->level == "System Analyst")
+            <a href="/module/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>  
+          @endif
           <table id="dataTables" class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -40,7 +54,9 @@
               <th>Name</th>
               <th>Project</th>
               <th>Created</th>
-              <th>Action</th>
+              @if (auth()->user()->level == "System Analyst")
+                <th>Action</th>   
+              @endif
             </tr>
             </thead>
             <tbody>
@@ -50,10 +66,12 @@
               <td>{{ $module->name_modul }}</td>
               <td>{{ $module->project->name }}</td>
               <td>{{ $module->created_at->format('d, M Y') }}</td>
-              <td>
-                  <a href="/module/{{ $module->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-danger d-inline" data-toggle="modal" data-target="#modalDelete{{ $module->id }}" ><i class="far fa-trash-alt"></i></button>
-              </td>
+              @if (auth()->user()->level == "System Analyst")
+                <td>
+                    <a href="/module/{{ $module->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    <button type="button" class="btn btn-danger d-inline" data-toggle="modal" data-target="#modalDelete{{ $module->id }}" ><i class="far fa-trash-alt"></i></button>
+                </td>
+              @endif
             </tr>
             {{-- Start Modal --}}
             <div class="modal fade" id="modalDelete{{ $module->id }}">
