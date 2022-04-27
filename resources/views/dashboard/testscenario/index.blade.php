@@ -25,6 +25,14 @@
               </button>
             </div> 
             @endif
+            @if (session()->has('failed'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ session('failed') }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> 
+            @endif
           </div>
         </div>
         </div>
@@ -32,7 +40,9 @@
 
     <div class="card">
       <div class="card-body">
-        <a href="/testscenario/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>
+        @if (auth()->user()->level == "Quality Assurance")
+          <a href="/testscenario/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>       
+        @endif
         <table id="dataTables" class="table table-bordered table-striped">
           <thead>
           <tr>
@@ -62,10 +72,10 @@
             @if ($test->result == "bug")
                 <td><span class="badge badge-danger">{{ $test->result }}</span></td>
             @endif
-            @if ($test->status == "Done")
+            @if ($test->status == "done")
             <td><span class="badge badge-success">{{ $test->status }}</span></td>
             @endif
-            @if ($test->status == "Failed")
+            @if ($test->status == "failed")
             <td><span class="badge badge-danger">{{ $test->status }}</span></td>
             @endif
             <td>{{ $test->created_at->format('d, M Y') }}</td>

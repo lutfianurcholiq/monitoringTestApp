@@ -15,15 +15,7 @@ class GroupSeeder extends Seeder
     public function run()
     {
         Group::create([
-            'name_group' => "Force Merge"
-        ]);
-
-        Group::create([
-            'name_group' => "uyeuye"
-        ]);
-
-        Group::create([
-            'name_group' => "kafuso"
+            'name_group' => "Vicenzo"
         ]);
     }
 }

@@ -24,28 +24,34 @@
                 <form method="POST" action="/testscenario/" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">Case</label>
-                            <input type="text" class="form-control @error('scenario') is-invalid @enderror" id="scenario" name="scenario" placeholder="Enter scenario" value="{{ old('scenario') }}">
-                            @error('scenario')
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="name">Scenario</label>
+                              <input type="text" class="form-control @error('scenario') is-invalid @enderror" id="scenario" name="scenario" placeholder="Enter scenario" value="{{ old('scenario') }}">
+                              @error('scenario')
+                              <div class="invalid-feedback">
+                                  {{ $message }}
+                              </div>
+                              @enderror
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="type">Type</label>
+                            @error('type')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
-                        </div>
-                        <div class="form-group">
-                          <label for="type">Type</label>
-                          @error('type')
-                          <div class="invalid-feedback">
-                              {{ $message }}
+                            <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
+                              <option>Select Type...</option> 
+                              <option value="Positive">Positive</option>
+                              <option value="Negative">Negative</option>
+                            </select>
                           </div>
-                          @enderror
-                          <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
-                            <option>Select Type...</option> 
-                            <option value="positif">Positive</option>
-                            <option value="negative">Negative</option>
-                          </select>
                         </div>
+                      </div>
                         <div class="form-group">
                           <div class="row">
                               <div class="col-md-6">
@@ -94,11 +100,40 @@
                               {{ $message }}
                           </div>
                           @enderror
-                          <select class="form-control @error('result') is-invalid @enderror" id="result" name="result" required>
+                          <select class="form-control @error('result') is-invalid @enderror" id="result" name="result" required onchange="changeResult()">
                             <option>Select Result...</option> 
                             <option value="success">Success</option>
                             <option value="bug">Bug & Error</option>
                           </select>
+                      </div>
+                      <div id="wsimage">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="image">Image</label>
+                              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+                              @error('image')
+                              <div class="invalid-feedback">
+                                  {{ $message }}
+                              </div>
+                              @enderror
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="form-group">
+                              <label for="note">Note</label>
+                              <textarea name="note" id="note" class="form-control @error('note') is-invalid @enderror" cols="10" rows="2" value="{{ old('note') }}"></textarea>
+                              @error('note')
+                              <div class="invalid-feedback">
+                                  {{ $message }}
+                              </div>
+                              @enderror
+                          </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input name="status" id="status" class="form-control" value="progress" hidden>
+                        </div>
                       </div>
                     </div>
                     <div class="card-footer">

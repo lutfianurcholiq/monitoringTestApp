@@ -22,7 +22,7 @@ class TestScenarioSeeder extends Seeder
             'type' => "Positive",
             'step' => "1. testing 2. testing ",
             'result' => 'success',
-            'status' => 'Done'
+            'status' => 'done'
         ]);
 
         TestScenario::create([
@@ -33,7 +33,7 @@ class TestScenarioSeeder extends Seeder
             'type' => "Positive",
             'step' => "1. testing 2. testing ",
             'result' => 'bug',
-            'status' => 'Failed'
+            'status' => 'failed'
         ]);
 
         TestScenario::create([
@@ -44,18 +44,7 @@ class TestScenarioSeeder extends Seeder
             'type' => "Positive",
             'step' => "1. testing 2. testing ",
             'result' => 'bug',
-            'status' => 'Failed'
-        ]);
-
-        TestScenario::create([
-            'user_id' => 1,
-            'project_id' => 1,
-            'module_id' => 2,
-            'scenario' => "button ke hide",
-            'type' => "Positive",
-            'step' => "1. testing 2. testing ",
-            'result' => 'bug',
-            'status' => 'Failed'
+            'status' => 'failed'
         ]);
     }
 }

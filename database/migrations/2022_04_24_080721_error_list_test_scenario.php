@@ -16,7 +16,7 @@ class ErrorListTestScenario extends Migration
         Schema::create('error_list_test_scenario', function (Blueprint $table) {
             $table->foreignId('error_list_id');
             $table->foreignId('test_scenario_id');
-            $table->primary(['error_list_id', 'test_scenario_id']);
+            $table->primary(['error_list_id','test_scenario_id']);
         });
     }
 

@@ -26,18 +26,29 @@
                     </button>
                 </div> 
                 @endif
+                @if (session()->has('failed'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('failed') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                @endif
                 </div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-            <a href="/errorList/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>
+            {{-- @if (auth()->user()->level == "Frontend Developer" || auth()->user()->level == "Backend Developer" || auth()->user()->level == "Data Management" || auth()->user()->level == "Quality Assurance")
+                <a href="/errorList/create" class="btn btn-primary mb-3 "><i class="nav-icon fas fa-plus"></i> Create</a>
+            @endif --}}
               <table id="dataTables" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>No</th>
                   <th>User QA</th>
+                  <th>Project - Module</th>
                   <th>Case</th>
                   <th>Error</th>
                   <th>Image</th>
@@ -49,7 +60,8 @@
                         <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $el->user->name }}</td>
-                        <td>{{ $el->testScenarios->implode('scenario')}}</td>
+                        <td>{{ $el->project->name }} - {{ $el->module->name_modul }}</td>
+                        <td>{{ $el->cased }}</td>
                         <td>{{ $el->note }}</td>
                         <td>
                             <button type="button" class="border-radius-none" data-toggle="modal" data-target="#staticBackdrop{{ $el->id }}">
@@ -57,15 +69,22 @@
                             </button>
                         </td>
                         <td>
+                        @if (auth()->user()->level == "Frontend Developer" || auth()->user()->level == "Backend Developer" || auth()->user()->level == "Data Management" || auth()->user()->level == "Quality Assurance")
                             @if ($el->status == 'progress')
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm{{ $el->id }}">
                                     <i class="fas fa-check"></i>
                                 </button>
-                                {{-- <a href="/error/{{ $el->id }}/edit" class="btn btn-danger"><i class="fas fa-check"></i></a> --}}
                             @else
-                                <a href="/errorList" class="btn btn-success"><i class="fas fa-check-double"></i></a>
+                                <a href="" class="btn btn-success"><i class="fas fa-check-double"></i></a>
                             @endif
+                        @else
+                            @if ($el->status == 'progress')
+                                <span class="badge badge-danger">{{ $el->status }}</span>
+                            @else
+                                <span class="badge badge-success">{{ $el->status }}</span>
+                            @endif
+                        @endif
                         </td>
                         </tr>
                         {{-- start modal confirm --}}
@@ -83,14 +102,14 @@
                                     <form action="/errorList/{{ $el->id }}" method="post">
                                       @method('put')
                                       @csrf
-                                      <div class="form-group">
-                                        <input name="status" id="status" class="form-control" value="success" readonly hidden>
-                                    </div>
+                                        <div class="form-group">
+                                            <input name="status" id="status" class="form-control" value="success" readonly hidden>
+                                        </div>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Yes</button>
+                                        <button type="submit" class="btn btn-success">Yes</button>
                                     </form>
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                               </div>
                             </div>

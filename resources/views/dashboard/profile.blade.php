@@ -92,6 +92,7 @@
                                       <label for="group_id" class="col-sm-2 col-form-label">Group</label>
                                       <div class="col-sm-10">
                                         <select class="form-control" id="group_id" name="group_id" required>
+                                          <option value="">Select Your Group...</option>
                                             @foreach ($groups as $group)
                                                 @if (old('group_id', $user->group_id) == $group->id)
                                                     <option value="{{ $group->id }}" selected>{{ $group->name_group }}</option>                

@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => "Udin",
             'level' => "System Analyst",
-            'group_id' => 2,
+            'group_id' => 1,
             'email' => "sa@gmail.com",
             'password' => bcrypt(123456)
             
@@ -53,9 +53,27 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => "gunawan",
-            'level' => "BE/DM",
-            'group_id' => 2,
+            'level' => "Backend Developer",
+            'group_id' => 1,
             'email' => "be@gmail.com",
+            'password' => bcrypt(123456),
+            
+        ]);
+
+        User::create([
+            'name' => "cahyo",
+            'level' => "Data Management",
+            'group_id' => 1,
+            'email' => "dm@gmail.com",
+            'password' => bcrypt(123456),
+            
+        ]);
+
+        User::create([
+            'name' => "bambang",
+            'level' => "Frontend Developer",
+            'group_id' => 1,
+            'email' => "fe@gmail.com",
             'password' => bcrypt(123456),
             
         ]);

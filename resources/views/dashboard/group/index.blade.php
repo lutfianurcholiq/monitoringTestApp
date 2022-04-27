@@ -52,8 +52,34 @@
               <td>{{ $group->created_at->format('d, M Y') }}</td>
               <td>
                   <a href="/group/{{ $group->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                  <button type="button" class="btn btn-danger d-inline" data-toggle="modal" data-target="#modalDelete{{ $group->id }}" ><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
+            {{-- Start Modal --}}
+            <div class="modal fade" id="modalDelete{{ $group->id }}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4>Confirmation...</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure delete this group {{ $group->name_group }}?</p>
+                  </div>
+                  <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <form action="/group/{{ $group->id }}" method="POST">
+                      @method('delete')
+                      @csrf
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- end modal --}}
             @endforeach
             </tbody>
           </table>

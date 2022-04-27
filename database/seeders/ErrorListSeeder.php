@@ -15,6 +15,29 @@ class ErrorListSeeder extends Seeder
     {
         ErrorList::create([
             'user_id' => 1,
+            'project_id' => 1,
+            'module_id' => 1,
+            'cased' => "test",
+            'note' => "test",
+            'image' => 'testing.jpg',
+            'status' => 'progress'
+        ]);
+
+        ErrorList::create([
+            'user_id' => 1,
+            'project_id' => 1,
+            'module_id' => 1,
+            'cased' => "test",
+            'note' => "test",
+            'image' => 'testing.jpg',
+            'status' => 'progress'
+        ]);
+
+        ErrorList::create([
+            'user_id' => 1,
+            'project_id' => 1,
+            'module_id' => 1,
+            'cased' => "test",
             'note' => "test",
             'image' => 'testing.jpg',
             'status' => 'progress'

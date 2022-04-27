@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGroupRequest;
-use App\Http\Requests\UpdateGroupRequest;
 
 class GroupController extends Controller
 {
@@ -126,6 +125,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        Group::destroy($group->id);
+
+        return redirect('/group')->with('success', 'Group is deleted');
     }
 }

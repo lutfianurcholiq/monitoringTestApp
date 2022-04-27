@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\errorList;
 use App\Models\TestScenario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreerrorListRequest;
-use App\Http\Requests\UpdateerrorListRequest;
 
 
 class ErrorListController extends Controller
@@ -33,10 +30,14 @@ class ErrorListController extends Controller
      */
     public function create()
     {
-        return view('dashboard.errorList.create', [
-            'title' => "Create Error",
-            'testScenarios' => TestScenario::all()
-        ]);
+        // if(Auth::user()->level != "Frontend Developer" && Auth::user()->level != "Backend Developer" && Auth::user()->level != "Data Management")
+        // {
+        //     return redirect('/errorList')->with('failed', 'Isnt your access');
+        // }
+        // return view('dashboard.errorList.create', [
+        //     'title' => "Create Error",
+        //     'testScenarios' => TestScenario::all()
+        // ]);
     }
 
     /**
@@ -51,24 +52,23 @@ class ErrorListController extends Controller
 
         // return $request;
     
-        $validatedData = $request->validate([
-            'test_scenario_id' => 'required',
-            'note' => 'required|max:255',
-            'image' => 'image|file|max:10000|mimes:jpg,png,jpeg',
-            'status' => 'max:255'
-        ]);
+        // $validatedData = $request->validate([
+        //     'test_scenario_id' => 'required',
+        //     'note' => 'required|max:255',
+        //     'image' => 'image|file|max:10000|mimes:jpg,png,jpeg',
+        //     'status' => 'max:255'
+        // ]);
 
+        // $validatedData = ErrorList::create([
+        //     'user_id' => Auth()->user()->id,
+        //     'note' => $request->note,
+        //     'image' => $request->file('image')->store('image-bug'),
+        //     'status' => $request->status
+        // ]);
 
-        $validatedData = ErrorList::create([
-            'user_id' => Auth()->user()->id,
-            'note' => $request->note,
-            'image' => $request->file('image')->store('image-bug'),
-            'status' => $request->status
-        ]);
+        // $validatedData->testScenarios()->sync($request->test_scenario_id);
 
-        $validatedData->testScenarios()->sync($request->test_scenario_id);
-
-        return redirect('/errorList')->with('success', 'Error Success Added');
+        // return redirect('/errorList')->with('success', 'Error Success Added');
 
     }
 
@@ -111,15 +111,26 @@ class ErrorListController extends Controller
             'status' => 'max:255'
         ]);
 
-        $errorList->testScenarios()->update([
-            'result' => $request->status,
-            'status' => "done" 
-        ]);
-
         
-        $errorList->update([
-            'status' => $request->status
-        ]);
+        // return $errorList;
+        
+        if($request->status == "success")
+        {
+            // $errorList->testScenarios()->update([
+                //     'result' => $request->status,
+                //     'status' => "done" 
+                // ]);
+                TestScenario::where('id', $errorList->test_id)->update([
+                    'result' => $request->status,
+                    'status' => "done" 
+                ]);
+
+                $errorList->update([
+                    'status' => $request->status
+                ]);
+        }
+        
+        
         
         // return $errorList;
         // return $errorList;

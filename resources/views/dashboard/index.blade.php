@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="card-body">
                       {{--  --}}
-                      @if (Auth::user()->group_id == 0)
+                      @if (Auth::user()->group_id == NULL)
                           <div class="col-md-12 ml-2 mt-3">
                             <ul class="users-list">
                               <span class="users-list-name">Your Are not Group!! Please Update Your Profile</span>
@@ -50,6 +50,7 @@
                           </div>
                       @else
                         @foreach ($users as $user)
+                        {{-- @dd($user) --}}
                             @if ($user->group->id == Auth::user()->group_id)
                             <div class="col-md-12 ml-2 mt-3">
                               <ul class="users-list">

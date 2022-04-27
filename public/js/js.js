@@ -28,4 +28,16 @@
         })
     });
 
+    // show input based dropdown
+    function changeResult()
+    {
+      var result = document.getElementById('result');
+      if(result.value == "success")
+      {
+          document.getElementById("wsimage").style.visibility = "hidden" 
+      }else{
+          document.getElementById("wsimage").style.visibility = "visible"
+      }
+    }
+
   

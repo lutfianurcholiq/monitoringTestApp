@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label for="test_scenario_id">Scenario</label>
                             <select class="form-control" id="test_scenario_id" name="test_scenario_id" required>
-                                <option value="">Select Scenario...</option>
+                            <option value="">Select Scenario...</option>
                               @foreach ($testScenarios as $test)
                                 @if($test->result == "bug")
                                     @if (old('test_scenario_id') == $test->id)

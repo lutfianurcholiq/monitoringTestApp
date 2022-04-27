@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Project;
 use App\Models\Module;
+use App\Models\Project;
 use App\Models\TestScenario;
+use App\Models\errorList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestScenarioController extends Controller
 {
@@ -30,11 +32,15 @@ class TestScenarioController extends Controller
      */
     public function create()
     {
-
+        if(Auth::user()->level != "Quality Assurance")
+        {
+            return redirect('/testscenario')->with('failed', 'Isnt your access');
+        }
+        
         return view('dashboard.testscenario.create', [
             'users' => User::all(),
             'projects' => Project::all(),
-            'modules' => Module::all(),
+            'modules' => Module::with('project')->get(),
             'title' => "Create Test Scenario"
 
         ]);
@@ -47,10 +53,10 @@ class TestScenarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, TestScenario $testScenario)
     { 
-        
-        $validatedData = $request->validate([
+        // return $request;  
+        $validated = $request->validate([
             'scenario' => 'required|max:255',
             'project_id' => 'required',
             'module_id' => 'required',
@@ -59,15 +65,34 @@ class TestScenarioController extends Controller
             'result' => 'required',
         ]);
 
-        if($validatedData['result'] == "Success"){
-                $validatedData['status'] = "Done";
+        if($validated['result'] == "success"){
+
+            $validated['status'] = "done";
+
         }else{
-                $validatedData['status'] = "Failed";
+            
+            $validated['status'] = "failed";
+
+            $bank = TestScenario::all('id')->count();
+
+            ErrorList::create([
+                'user_id' => Auth()->user()->id,
+                'project_id' => $request->project_id,
+                'test_id' => $bank + 1,
+                'module_id' => $request->module_id,
+                'cased' => $request->scenario,
+                'note' => $request->note,
+                'image' => $request->file('image')->store('image-bug'),
+                'status' => $request->status
+            ]);
+            
+            // $validated->testScenarios()->sync($request->error_list_id);
         }
 
-        $validatedData['user_id'] = Auth()->user()->id;
+        $validated['user_id'] = auth()->user()->id;
+        
+        TestScenario::create($validated);
 
-        TestScenario::create($validatedData);
 
         return redirect('/testscenario')->with('success', 'Test Scenario Created Success');
     }

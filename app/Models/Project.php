@@ -25,4 +25,9 @@ class Project extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function errorLists()
+    {
+        return $this->hasMany(ErrorList::class);
+    }
 }

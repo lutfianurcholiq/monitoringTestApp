@@ -36,7 +36,9 @@
             <option value="Quality Assurance">Quality Assurance</option>
             <option value="System Analyst">System Analyst</option>
             <option value="Technical Writing">Technical Writing</option>
-            <option value="BE/DM">Backend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+            <option value="Data Management">Data Management</option>
+            <option value="Frontend Developer">Frontend Developer</option>
           </select>
           @error('email')
             <div class="invalid-feedback">

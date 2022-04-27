@@ -16,6 +16,10 @@ class CreateErrorListsTable extends Migration
         Schema::create('error_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('project_id');
+            $table->foreignId('test_id');
+            $table->foreignId('module_id');
+            $table->string('cased');
             $table->string('note');
             $table->string('image')->nullable();    
             $table->string('status');
